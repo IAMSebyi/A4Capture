@@ -1,3 +1,5 @@
+import sys
+
 import cv2
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
@@ -76,13 +78,13 @@ class DocumentScanner:
 
         # Define destination points for perspective transform
         if tab:
-            dst_points = np.array([(0, 0), (0, int(PAGE_HEIGHT)), (int(PAGE_WIDTH) * 2, 0),
-                                   (int(PAGE_WIDTH) * 2, int(PAGE_HEIGHT))], dtype="float32")
-            dst_size = (int(PAGE_WIDTH) * 2, int(PAGE_HEIGHT))
+            dst_points = np.array([(0, 0), (0, int(PAGE_HEIGHT) * 4), (int(PAGE_WIDTH) * 4 * 2, 0),
+                                   (int(PAGE_WIDTH) * 4 * 2, int(PAGE_HEIGHT) * 4)], dtype="float32")
+            dst_size = (int(PAGE_WIDTH) * 4 * 2, int(PAGE_HEIGHT) * 4)
         else:
-            dst_points = np.array([(0, 0), (int(PAGE_WIDTH), 0), (0, int(PAGE_HEIGHT)),
-                                   (int(PAGE_WIDTH), int(PAGE_HEIGHT))], dtype="float32")
-            dst_size = (int(PAGE_WIDTH), int(PAGE_HEIGHT))
+            dst_points = np.array([(0, 0), (int(PAGE_WIDTH) * 4, 0), (0, int(PAGE_HEIGHT) * 4),
+                                   (int(PAGE_WIDTH) * 4, int(PAGE_HEIGHT) * 4)], dtype="float32")
+            dst_size = (int(PAGE_WIDTH) * 4, int(PAGE_HEIGHT) * 4)
 
         # Get perspective transform matrix
         perspective_matrix = cv2.getPerspectiveTransform(document_points, dst_points)
